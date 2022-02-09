@@ -1,5 +1,4 @@
 import enum
-from select import select
 import time
 
 ID, XPOS, YPOS = 0, 1, 2
@@ -34,7 +33,7 @@ class GameControl():
     def __init__( self ) :
         self.distanceState = POS # record positvie or negative
         self.step = 0
-        self.stepStarting = 0
+        self.preTimeRecordStep = 0
         self.velocity = 0
         self.curTime = 0
         self.preTime = 0
@@ -44,32 +43,41 @@ class GameControl():
         self.handLandMarkPosition = handLandMarkPosition
         #print( self.handLandMarkPosition[5] )
         #print(self.IsReady())
+        if len(self.handLandMarkPosition) != 0 :
+            if ( self.IsReady() ):
+                
+                self.IsOneStep( distanceTurnOut = 20 )
+                #print( "step:", self.step )
+                
+                #print(passASecond)
+                if ( self.IsOneSecond() ):
 
-        if ( self.IsReady() ):
-            
-            self.IsOneStep( distanceTurnOut = 20 )
-            #print( "step:", self.step )
-            
-            #print(passASecond)
-            if ( self.IsOneSecond() ):
-                self.CalculatingVelocity()
-                print( "velocity( steps/ per second): ", self.velocity )
+                    self.CalculatingVelocity(0.7, 0.3)
+                    print( "velocity( steps/ per second): ", self.velocity )
+
+        elif ( self.IsOneSecond() ):
+            self.CalculatingVelocity( 0.15, 0.85 )
+            print( "velocity( steps/ per second): ", self.velocity )
 
 
-    def CalculatingVelocity( self ):
-        Bias = ( self.step - self.stepStarting )
-        self.velocity = (self.velocity*0.8 + Bias*0.2)
-        self.stepStarting = self.step
+    def CalculatingVelocity( self, a = 0.8, b = 0.2 ):
+        Bias = ( self.step - self.preTimeRecordStep )
+        print( Bias )
+        self.velocity = round((self.velocity*a + Bias*b), 1) # normalize the velocity
+        self.preTimeRecordStep = self.step
+
+
+    # def IsBiggerThanTwoSecond(self):
+    #     if ( (self.curTime - self.perSecondStaringTime) > 2 ):
+    #         self.perSecondStaringTime = self.curTime
+    #         return True
+    #     else:
+    #         return False
 
 
     def IsOneSecond( self ) :
 
-        # if is not in ready state
-        if ( (self.curTime - self.perSecondStaringTime) > 2 ):
-            self.perSecondStaringTime = self.curTime
-            return False
-
-        if ( (self.curTime - self.perSecondStaringTime) > 1 ):
+        if ( (self.curTime - self.perSecondStaringTime) >= 1 ):
             self.perSecondStaringTime = self.curTime
             return True
         else:
@@ -108,13 +116,8 @@ class GameControl():
     def IsOneStep( self, distanceTurnOut = 50 ):
         indexFingerTip_Xpos = self.handLandMarkPosition[HandLandmark.INDEX_FINGER_TIP][XPOS]
         middleFingerTip_Xpos = self.handLandMarkPosition[HandLandmark.MIDDLE_FINGER_TIP][XPOS]
-
-        #print( indexFingerTip_Xpos - middleFingerTip_Xpos )
-        #print( middleFingerTip_Xpos )
         
         distance = self.CalculateDistance( indexFingerTip_Xpos, middleFingerTip_Xpos )
-        
-        #print( distance )
 
         if ( distance >= 0 and self.distanceState == NEG ):
             if ( abs( distance ) > distanceTurnOut ):
