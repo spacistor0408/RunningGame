@@ -1,5 +1,6 @@
-import numpy as np
 import enum
+from select import select
+import time
 
 ID, XPOS, YPOS = 0, 1, 2
 POS, NEG = 0, 1
@@ -33,7 +34,11 @@ class GameControl():
     def __init__( self ) :
         self.distanceState = POS # record positvie or negative
         self.step = 0
-        pass
+        self.stepStarting = 0
+        self.velocity = 0
+        self.curTime = 0
+        self.preTime = 0
+        self.perSecondStaringTime = time.time()
 
     def Run( self, img, *handLandMarkPosition ):
         self.handLandMarkPosition = handLandMarkPosition
@@ -41,11 +46,55 @@ class GameControl():
         #print(self.IsReady())
 
         if ( self.IsReady() ):
-            self.IsOneStep( distanceTurnOut = 80 )
-            print( "step:", self.step )
+            
+            self.IsOneStep( distanceTurnOut = 20 )
+            #print( "step:", self.step )
+            
+            #print(passASecond)
+            if ( self.IsOneSecond() ):
+                self.CalculatingVelocity()
+                print( "velocity( steps/ per second): ", self.velocity )
+
+
+    def CalculatingVelocity( self ):
+        Bias = ( self.step - self.stepStarting )
+        self.velocity = (self.velocity*0.8 + Bias*0.2)
+        self.stepStarting = self.step
+
+
+    def IsOneSecond( self ) :
+
+        # if is not in ready state
+        if ( (self.curTime - self.perSecondStaringTime) > 2 ):
+            self.perSecondStaringTime = self.curTime
+            return False
+
+        if ( (self.curTime - self.perSecondStaringTime) > 1 ):
+            self.perSecondStaringTime = self.curTime
+            return True
+        else:
+            return False
+        
+
+    def InitPerSecondStartingTime(self):
+        self.perSecondStaringTime = self.curTime
+
+
+    def GetFPS( self ):
+        self.curTime = time.time()
+        fps = 1 / (self.curTime - self.preTime )
+        self.preTime = self.curTime
+
+        return fps
+
 
     def GetStep( self ):
         return self.step
+
+
+    def GetVelocity( self ):
+        return self.velocity
+
 
     def IsReady( self ) :
         #print( self.handLandMarkPosition[5] )
