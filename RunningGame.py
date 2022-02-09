@@ -1,4 +1,3 @@
-from math import gamma
 import cv2
 import HandTrackingModule as HandTracker
 import GameController as Game
@@ -22,10 +21,11 @@ def main():
 
             cv2.putText(img, str(int(controller.GetFPS())), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (151, 166, 134), 3)
 
-            if len(handLandMarkPosition) != 0 :
+            #if len(handLandMarkPosition) != 0 :
                 
-                controller.Run(img, *handLandMarkPosition)
-                cv2.putText( img, str(int(controller.GetStep())), ( 100, 70 ), cv2.FONT_HERSHEY_PLAIN, 3, ( 156, 53, 58 ), 3 )
+            controller.Run(img, *handLandMarkPosition)
+
+            cv2.putText( img, str(int(controller.GetStep())), ( 100, 70 ), cv2.FONT_HERSHEY_PLAIN, 3, ( 156, 53, 58 ), 3 )
 
             cv2.imshow('img', img)
 
