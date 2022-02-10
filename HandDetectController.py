@@ -28,7 +28,7 @@ class HandLandmark(enum.IntEnum):
   PINKY_DIP = 19
   PINKY_TIP = 20
 
-class GameControl():
+class GestureController():
 
     def __init__( self ) :
         self.distanceState = POS # record positvie or negative
@@ -59,13 +59,11 @@ class GameControl():
             self.CalculatingVelocity( 0.15, 0.85 )
             print( "velocity( steps/ per second): ", self.velocity )
 
-
     def CalculatingVelocity( self, a = 0.8, b = 0.2 ):
         Bias = ( self.step - self.preTimeRecordStep )
         print( Bias )
         self.velocity = round((self.velocity*a + Bias*b), 1) # normalize the velocity
         self.preTimeRecordStep = self.step
-
 
     def IsOneSecond( self ) :
 
@@ -75,10 +73,8 @@ class GameControl():
         else:
             return False
         
-
     def InitPerSecondStartingTime(self):
         self.perSecondStaringTime = self.curTime
-
 
     def GetFPS( self ):
         self.curTime = time.time()
@@ -87,14 +83,11 @@ class GameControl():
 
         return fps
 
-
     def GetStep( self ):
         return self.step
 
-
     def GetVelocity( self ):
         return self.velocity
-
 
     def IsReady( self ) :
         #print( self.handLandMarkPosition[5] )
@@ -103,7 +96,6 @@ class GameControl():
             return True
         else:
             return False
-
 
     def IsOneStep( self, distanceTurnOut = 50 ):
         indexFingerTip_Xpos = self.handLandMarkPosition[HandLandmark.INDEX_FINGER_TIP][XPOS]
@@ -121,8 +113,6 @@ class GameControl():
                 self.step += 1
                 self.distanceState = NEG
 
-
     def CalculateDistance( self, X1, X2 ):
         return (X1 - X2)
-        #self.handLandMarkPosition[HandLandmark.INDEX_FINGER_TIP]
     

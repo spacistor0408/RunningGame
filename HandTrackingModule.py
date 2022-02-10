@@ -22,9 +22,7 @@ class HandDetector():
     def FindHands( self, img, draw = True ): # Find out all of hands in the image
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # BGR to RGB
-        self.result = self.hands.process(imgRGB)
-                
-        
+        self.result = self.hands.process(imgRGB) 
 
         if self.result.multi_hand_landmarks: #detect wheather the hand detect
             for handLms in self.result.multi_hand_landmarks:
