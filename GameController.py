@@ -67,8 +67,6 @@ class GameControl():
         self.preTimeRecordStep = self.step
 
 
-    def IsPassingTheTime( self, time = 1 ) :
-
     def IsOneSecond( self ) :
 
         if ( (self.curTime - self.perSecondStaringTime) >= 1 ):
