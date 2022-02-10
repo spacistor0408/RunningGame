@@ -1,1 +1,1 @@
-self.isReady()
+GAMESPEED

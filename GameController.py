@@ -67,13 +67,7 @@ class GameControl():
         self.preTimeRecordStep = self.step
 
 
-    # def IsBiggerThanTwoSecond(self):
-    #     if ( (self.curTime - self.perSecondStaringTime) > 2 ):
-    #         self.perSecondStaringTime = self.curTime
-    #         return True
-    #     else:
-    #         return False
-
+    def IsPassingTheTime( self, time = 1 ) :
 
     def IsOneSecond( self ) :
 
