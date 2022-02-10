@@ -117,6 +117,8 @@ def main():
 
         # Set Game FPS
 
+        run = DinoGame.IsExist()
+        
         success, img = cap.read()
 
         img = cv2.flip(img, 1)
