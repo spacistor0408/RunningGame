@@ -2,13 +2,14 @@ import cv2
 import HandTrackingModule as HandTracker
 import HandDetectController
 import DinoGameControl
+from pygame import time
 # import pygame
 # import os
 # import random
 
 #pygame.init()
 
-#FPS = 30
+FPS = 30
 
 # SCREEN_HEIGHT = 600
 # SCREEN_WIDTH = 1100
@@ -97,7 +98,7 @@ def main():
 
     run = True
     DinoGame = DinoGameControl.DinoGame()
-    # clock = pygame.time.Clock()
+    clock = time.Clock()
     # player = Dinosaur()
     # cloud = Cloud()
     # bg = BackGround()
@@ -108,7 +109,7 @@ def main():
     while run:
         
         # Get Input
-        #clock.tick(FPS)
+        clock.tick(FPS)
 
         # for event in pygame.event.get():
         #     if event.type == pygame.QUIT:
@@ -137,10 +138,10 @@ def main():
             cv2.imshow('img', img)
 
         #GameSpeed = gestureController.GetVelocity()*10
-        DinoGame.SetSpeed(gestureController.GetVelocity()*10)
-        # UPDATE
+            DinoGame.SetSpeed(gestureController.GetVelocity()*10)
+            # UPDATE
 
-        DinoGame.UpDate()
+            DinoGame.UpDate()
 
         # player.Draw()
         # player.Update()

@@ -71,6 +71,39 @@ class BackGround():
         SCREEN.blit(self.display_img, (self.xPos, self.yPos))
         SCREEN.blit(self.display_img, (self.width + self.xPos, self.yPos))
 
+class Bird():
+    def __init__(self):
+        self.xPos = cfg.SCREEN_WIDTH
+        self.yPos = 250
+        self.fly_img = []
+
+        for value in cfg.IMAGES['BIRD']:
+            self.fly_img.append(pygame.image.load(value))
+
+        self.display_img = self.fly_img[0]
+        self.fly_index = 0
+        self.flyingSpeed = 5
+
+    def Update( self, speed ):
+
+        self.xPos -= (self.flyingSpeed + speed)
+        if ( self.xPos <= -self.display_img.get_width() ):
+            self.xPos = cfg.SCREEN_WIDTH + random.randint(100, 2000)
+            self.yPos = random.randint( 250, 270 )
+        
+        self.Fly()
+        if ( self.fly_index >= 10 ):
+            self.fly_index = 0
+
+        #print( self.xPos, self.yPos )
+
+    def Fly( self ):
+        self.display_img = self.fly_img[ self.fly_index//5 ]
+        self.fly_index += 1
+
+    def Draw(self):
+        SCREEN.blit( self.display_img, (self.xPos, self.yPos) )
+
 class DinoGame():
 
     def __init__(self): 
@@ -80,6 +113,7 @@ class DinoGame():
         self.player = Dinosaur()
         self.cloud = Cloud()
         self.bg = BackGround()
+        self.bird = Bird()
         SCREEN.fill(cfg.COLOR)
 
     def UpDate(self):
@@ -90,6 +124,8 @@ class DinoGame():
         self.cloud.Update( self.GAMESPEED )
         self.bg.Draw()
         self.bg.Update( self.GAMESPEED )
+        self.bird.Draw()
+        self.bird.Update(self.GAMESPEED)
 
         pygame.display.update()
 

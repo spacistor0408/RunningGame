@@ -61,7 +61,7 @@ class GestureController():
 
     def CalculatingVelocity( self, a = 0.8, b = 0.2 ):
         Bias = ( self.step - self.preTimeRecordStep )
-        print( Bias )
+        #print( Bias )
         self.velocity = round((self.velocity*a + Bias*b), 1) # normalize the velocity
         self.preTimeRecordStep = self.step
 
