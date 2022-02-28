@@ -27,12 +27,11 @@ class HandDetector():
         if self.result.multi_hand_landmarks: #detect wheather the hand detect
             for handLms in self.result.multi_hand_landmarks:
                 if draw:
-                    self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS) #draw in img
-                
+                    self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS) #draw in img   
 
         return img
 
-    def GetPosition( self, img, handNo = 0 ):
+    def GetPosition( self, img, handNo = 0, draw = False ):
         handLandMarkPosition = []
 
         imgWidth = img.shape[0]
@@ -44,9 +43,28 @@ class HandDetector():
                 
                 xPos = int(lm.x * imgWidth)
                 yPos = int(lm.y * imgHeight)
+
+                #print( round(lm.x * imgWidth, 2), round(lm.y * imgHeight, 2) )
+                
                 handLandMarkPosition.append([id, xPos, yPos])
+
+                if draw:
+                    if ( id == self.mpHands.HandLandmark.INDEX_FINGER_TIP and id == self.mpHands.HandLandmark.MIDDLE_FINGER_TIP ):
+                        cv2.circle( img, (xPos, yPos), 15, (255, 255, 255), cv2.FILLED )
                 #print(id, "x:", xPos, " y:", yPos)
 
         return handLandMarkPosition
 
+    # def DrawParticularFinger( self ):
+        
+    #     if self.maxHands:
+    #        for handNo in self.maxHands:
+    #             theHand = self.result.multi_hand_landmarks[handNo]
+
+    #             for id, lm in enumerate(theHand.landmark):
+
+    #                 pass
+                    
+                    
+        
 

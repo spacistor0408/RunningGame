@@ -11,13 +11,13 @@ IMAGES = {
     'DUNKING':[os.path.join( PATH, "Dino/DinoDuck1.png"), 
                os.path.join( PATH, "Dino/DinoDuck2.png")], 
 
-    'SMALL_CACTUS':[os.path.join( PATH, "Catus/SmallCactus1.png"), 
-                    os.path.join( PATH, "Catus/SmallCactus2.png"),
-                    os.path.join( PATH, "Catus/SmallCactus3.png")],
+    'SMALL_CACTUS':[os.path.join( PATH, "Cactus/SmallCactus1.png"), 
+                    os.path.join( PATH, "Cactus/SmallCactus2.png"),
+                    os.path.join( PATH, "Cactus/SmallCactus3.png")],
 
-    'LARGE_CACTUS':[os.path.join( PATH, "Catus/LargeCactus1.png"),
-                    os.path.join( PATH, "Catus/LargeCactus2.png"),
-                    os.path.join( PATH, "Catus/LargeCactus3.png")],
+    'LARGE_CACTUS':[os.path.join( PATH, "Cactus/LargeCactus1.png"),
+                    os.path.join( PATH, "Cactus/LargeCactus2.png"),
+                    os.path.join( PATH, "Cactus/LargeCactus3.png")],
 
     'BIRD':[os.path.join( PATH, "Bird/Bird1.png"), 
             os.path.join( PATH, "Bird/Bird2.png")],
@@ -36,6 +36,8 @@ IMAGES = {
 
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100 
+
+GROUND_HEIGHT1 = 380
 
 WHITE = (255, 255, 255)
 COLOR = WHITE
